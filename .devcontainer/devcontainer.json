@@ -1,0 +1,14 @@
+{
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools-extension-pack",
+                "morningfrog.symbol-converter"
+            ]
+        }
+    },
+    "postCreateCommand": "sh install_requirements.sh"
+}
