@@ -11,14 +11,14 @@ namespace VVCM
     class VVCM_Simulation
     {
     public:
-        VVCM_FK fk_engine;
-        Vector2f global_pos;
-        MatrixXf Rn;
-        Vector3f Po;
-        IntVector It;
-        int solution_idx;
-        float dt;
-        MatrixXf Rn_vel;
+        VVCM_FK fk_engine;   // Forward Kinematics Engine
+        Vector2f global_pos; // Global position of the formation
+        MatrixXf Rn;         // Current robot formation (the true position of all robots should be Rn + global_pos)
+        Vector3f Po;         // Current object position (the true position of the object should be Po + global_pos)
+        IntVector It;        // The taut cable set
+        int solution_idx;    // Index of the solution in the fk_engine
+        float dt;            // Time step for the simulation
+        MatrixXf Rn_vel;     // Velocity of the robots (N x 2)
 
         /**
          * @brief init the engine, all the unit of length is mm or s.

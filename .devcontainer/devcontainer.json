@@ -13,5 +13,9 @@
             ]
         }
     },
-    "postCreateCommand": "sh install_requirements.sh"
+    "remoteUser": "root",
+    "initializeCommand": "xhost + && sudo apt install acl && sudo setfacl -d -m g:$(id -g):rwx . && sudo setfacl -m g:$(id -g):rwx .",
+    "postCreateCommand": "sh install_requirements.sh",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+    "workspaceFolder": "/workspace"
 }

@@ -14,35 +14,55 @@ class VVCM_FK:
     def update_stable_solutions(self, Rn: numpy.ndarray[numpy.float32[m, n]]) -> VVCM_FK_Error:
         ...
     @property
-    def ITn(self) -> ...:
-        ...
+    def ITn(self) -> list[int]:
+        """
+        Number of non-taut cables in each solution
+        """
     @property
-    def It(self) -> ...:
-        ...
+    def It(self) -> list[list[int]]:
+        """
+        Taut cable set in all stable solutions
+        """
     @property
     def M(self) -> int:
-        ...
+        """
+        Number of stable solutions
+        """
     @property
     def N(self) -> int:
-        ...
+        """
+        Number of robots
+        """
     @property
-    def Po(self) -> ...:
-        ...
+    def Po(self) -> list[numpy.ndarray[numpy.float32[3, 1]]]:
+        """
+        Object positions in world frame in all stable solutions
+        """
     @property
     def Rn(self) -> numpy.ndarray[numpy.float32[m, n]]:
-        ...
+        """
+        Current robot formation
+        """
     @property
-    def Tn(self) -> ...:
-        ...
+    def Tn(self) -> list[int]:
+        """
+        Number of taut cables in each solution
+        """
     @property
     def Vn(self) -> numpy.ndarray[numpy.float32[m, n]]:
-        ...
+        """
+        Sheet shape
+        """
     @property
-    def Vo(self) -> ...:
-        ...
+    def Vo(self) -> list[numpy.ndarray[numpy.float32[2, 1]]]:
+        """
+        Object positions in sheet frame in all stable solutions
+        """
     @property
     def zr(self) -> float:
-        ...
+        """
+        Height of holding point
+        """
 class VVCM_FK_Error:
     """
     Error Type for VVCM_FK
@@ -118,23 +138,35 @@ class VVCM_ManualSimulation:
             Po
         """
     @property
-    def It(self) -> ...:
-        ...
+    def It(self) -> list[int]:
+        """
+        The taut cable set
+        """
     @property
     def Po(self) -> numpy.ndarray[numpy.float32[3, 1]]:
-        ...
+        """
+        Current object position (the true position of the object should be Po + global_pos)
+        """
     @property
     def Rn(self) -> numpy.ndarray[numpy.float32[m, n]]:
-        ...
+        """
+        Current robot formation (the true position of all robots should be Rn + global_pos)
+        """
     @property
     def fk_engine(self) -> VVCM_FK:
-        ...
+        """
+        Forward Kinematics Engine
+        """
     @property
     def global_pos(self) -> numpy.ndarray[numpy.float32[2, 1]]:
-        ...
+        """
+        Global position of the formation
+        """
     @property
     def solution_idx(self) -> int:
-        ...
+        """
+        Index of the solution in the fk_engine
+        """
 class VVCM_Simulation:
     """
     Simulation Engine for Multi-Robot Deformable Sheet Transport System
@@ -169,26 +201,42 @@ class VVCM_Simulation:
         Simulation step
         """
     @property
-    def It(self) -> ...:
-        ...
+    def It(self) -> list[int]:
+        """
+        The taut cable set
+        """
     @property
     def Po(self) -> numpy.ndarray[numpy.float32[3, 1]]:
-        ...
+        """
+        Current object position (the true position of the object should be Po + global_pos)
+        """
     @property
     def Rn(self) -> numpy.ndarray[numpy.float32[m, n]]:
-        ...
+        """
+        Current robot formation (the true position of all robots should be Rn + global_pos)
+        """
     @property
     def Rn_vel(self) -> numpy.ndarray[numpy.float32[m, n]]:
-        ...
+        """
+        Velocity of the robots (N x 2)
+        """
     @property
     def dt(self) -> float:
-        ...
+        """
+        Time step for the simulation
+        """
     @property
     def fk_engine(self) -> VVCM_FK:
-        ...
+        """
+        Forward Kinematics Engine
+        """
     @property
     def global_pos(self) -> numpy.ndarray[numpy.float32[2, 1]]:
-        ...
+        """
+        Global position of the formation
+        """
     @property
     def solution_idx(self) -> int:
-        ...
+        """
+        Index of the solution in the fk_engine
+        """

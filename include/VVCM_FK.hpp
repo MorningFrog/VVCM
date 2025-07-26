@@ -31,17 +31,17 @@ namespace VVCM
     class VVCM_FK
     {
     public:
-        int N;
-        float zr;
-        MatrixXf Vn;
+        int N;       // Number of robots
+        float zr;    // Height of holding point
+        MatrixXf Vn; // Sheet shape
 
-        int M;
-        MatrixXf Rn;
-        Vector3fVector Po;
-        Vector2fVector Vo;
-        IntVectorVector It;
-        IntVector Tn;
-        IntVector ITn;
+        int M;              // Number of stable solutions
+        MatrixXf Rn;        // Current robot formation
+        Vector3fVector Po;  // Object positions in world frame in all stable solutions
+        Vector2fVector Vo;  // Object positions in sheet frame in all stable solutions
+        IntVectorVector It; // Taut cable set in all stable solutions
+        IntVector Tn;       // Number of taut cables in each solution
+        IntVector ITn;      // Number of non-taut cables in each solution
 
         VVCM_FK(int N, float zr, const MatrixXf &Vn);
 
@@ -72,7 +72,9 @@ namespace VVCM
         vvcm_CQP(const IntVector &taut_vec);
 
         bool in_polygon(float x, float y, const std::vector<float> &xv, const std::vector<float> &yv);
-        VectorXf get_local_minimalism(int M, const IntVector &Tn, const IntVector &ITn, const VectorXfVector &lambda, const IntVector &Omega_idx, const MatrixXfVector &Omega);
+        VectorXf
+        get_local_minimalism(int M, const IntVector &Tn, const IntVector &ITn, const VectorXfVector &lambda,
+                             const IntVector &Omega_idx, const MatrixXfVector &Omega);
     };
 
 } // namespace VVCM

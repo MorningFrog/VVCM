@@ -13,12 +13,12 @@ namespace VVCM
     class VVCM_ManualSimulation
     {
     public:
-        VVCM_FK fk_engine;
-        Vector2f global_pos;
-        MatrixXf Rn;
-        Vector3f Po;
-        IntVector It;
-        int solution_idx;
+        VVCM_FK fk_engine;   // Forward Kinematics Engine
+        Vector2f global_pos; // Global position of the formation
+        MatrixXf Rn;         // Current robot formation (the true position of all robots should be Rn + global_pos)
+        Vector3f Po;         // Current object position (the true position of the object should be Po + global_pos)
+        IntVector It;        // The taut cable set
+        int solution_idx;    // Index of the solution in the fk_engine
 
         VVCM_ManualSimulation(int N, float zr, const MatrixXf &Vn) : fk_engine(N, zr, Vn) {};
 
@@ -27,7 +27,7 @@ namespace VVCM
          *
          * @param Rn_initial current robot formation
          * @param Po_initial current Po (unimportant, it affets the solution choosen)
-         * @return Po
+         * @return Error info, Po
          */
         std::tuple<VVCM_FK_Error, Vector3f> init(const MatrixXf &Rn_initial, const Vector3f &Po_initial = Vector3f(0.0, 0.0, 0.0));
 

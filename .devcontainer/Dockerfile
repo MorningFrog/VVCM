@@ -23,6 +23,8 @@ RUN apt-get update && apt-get install -y \
     pkg-config \
     autoconf automake autoconf-archive
 
+# 安装 vcpkg
+ENV VCPKG_ROOT=/usr/local/vcpkg
 RUN cd /usr/local && git clone https://github.com/microsoft/vcpkg \
     && cd vcpkg && ./bootstrap-vcpkg.sh -disableMetrics \
     && echo "set(VCPKG_BUILD_TYPE release)" | tee -a triplets/x64-linux.cmake \
