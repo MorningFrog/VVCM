@@ -47,6 +47,7 @@ MACOSX_DEPLOYMENT_TARGET = "10.14"
 
 [tool.cibuildwheel.linux]
 before-all = "bash cibuildwheel_scripts/before-all.linux.bash"
+archs = ["x86_64"]
 
 [tool.cibuildwheel.linux.environment]
 VCPKG_ROOT = "/opt/vcpkg"
@@ -55,8 +56,9 @@ CMAKE_TOOLCHAIN_FILE = "/opt/vcpkg/scripts/buildsystems/vcpkg.cmake"
 
 [tool.cibuildwheel.windows]
 before-all = "powershell -ExecutionPolicy Bypass -File cibuildwheel_scripts/before-all.windows.ps1"
+archs = ["AMD64"]
 
 [tool.cibuildwheel.windows.environment]
-VCPKG_ROOT = "C:/vcpkg"
+VCPKG_ROOT = "C:\\vcpkg"
 VCPKG_TARGET_TRIPLET = "x64-windows"
-CMAKE_TOOLCHAIN_FILE = "C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
+CMAKE_TOOLCHAIN_FILE = "C:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake"
