@@ -47,8 +47,8 @@ jobs:
     - name: Set cibuildwheel hooks
       shell: bash
       run: |
-        echo 'CIBW_BEFORE_BUILD_LINUX=ls -la' >> $GITHUB_ENV
-        echo 'CIBW_BEFORE_BUILD_MACOS=ls -la' >> $GITHUB_ENV
+        echo 'CIBW_BEFORE_BUILD_LINUX=bash install_scripts/install_vcpkg.ubuntu.bash && bash install_scripts/install_requirements.ubuntu.bash' >> $GITHUB_ENV
+        echo 'CIBW_BEFORE_BUILD_MACOS=bash install_scripts/install_vcpkg.macos.bash && bash install_scripts/install_requirements.macos.bash' >> $GITHUB_ENV
         echo 'CIBW_BEFORE_BUILD_WINDOWS="powershell -ExecutionPolicy Bypass -Command \"Get-Location\""' >> $GITHUB_ENV
 
     - uses: pypa/cibuildwheel@v2.22
