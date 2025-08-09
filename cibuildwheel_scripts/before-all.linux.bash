@@ -10,24 +10,24 @@ elif command -v apk >/dev/null 2>&1; then
 fi
 
 # install vcpkg
-INSTALL_DIR=/opt/vcpkg
+VCPKG_ROOT=/opt/vcpkg
 
-echo "Installing vcpkg to $INSTALL_DIR"
+echo "Installing vcpkg to $VCPKG_ROOT"
 
 # Clone vcpkg
-if [ ! -d "$INSTALL_DIR" ]; then
-  git clone https://github.com/microsoft/vcpkg.git "$INSTALL_DIR"
+if [ ! -d "$VCPKG_ROOT" ]; then
+  git clone https://github.com/microsoft/vcpkg.git "$VCPKG_ROOT"
 else
   echo "vcpkg directory already exists. Pulling latest changes..."
-  (cd "$INSTALL_DIR" && git pull --ff-only)
+  (cd "$VCPKG_ROOT" && git pull --ff-only)
 fi
 
 
 # Bootstrap the installation
-cd "$INSTALL_DIR"
+cd "$VCPKG_ROOT"
 ./bootstrap-vcpkg.sh -disableMetrics
 
 echo "set(VCPKG_BUILD_TYPE release)" | tee -a triplets/${VCPKG_DEFAULT_TRIPLET:-x64-linux}.cmake
 
 # install eigen3
-"$INSTALL_DIR/vcpkg" install Eigen3
+"$VCPKG_ROOT/vcpkg" install Eigen3

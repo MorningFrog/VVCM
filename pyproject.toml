@@ -36,6 +36,9 @@ build-verbosity = 1
 # test-command = "pytest {project}/tests"
 # test-requires = "pytest"
 
+# skip pypy wheels
+skip = "pp*"
+
 [tool.cibuildwheel.macos]
 
 [tool.cibuildwheel.macos.environment]
@@ -51,3 +54,8 @@ VCPKG_DEFAULT_TRIPLET = "x64-linux"
 CMAKE_TOOLCHAIN_FILE = "/opt/vcpkg/scripts/buildsystems/vcpkg.cmake"
 
 [tool.cibuildwheel.windows]
+before-all = "powershell -ExecutionPolicy Bypass -File cibuildwheel_scripts/before-all.windows.ps1"
+
+[tool.cibuildwheel.windows.environment]
+VCPKG_ROOT = "C:/vcpkg"
+CMAKE_TOOLCHAIN_FILE = "C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
