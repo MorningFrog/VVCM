@@ -37,7 +37,7 @@ build-verbosity = 1
 # test-requires = "pytest"
 
 # skip pypy wheels
-skip = "pp*"
+skip = ["pp*", "cp38*", "cp39*", "cp310*", "cp311*", "cp312*"]
 
 [tool.cibuildwheel.macos]
 
@@ -58,4 +58,5 @@ before-all = "powershell -ExecutionPolicy Bypass -File cibuildwheel_scripts/befo
 
 [tool.cibuildwheel.windows.environment]
 VCPKG_ROOT = "C:/vcpkg"
+VCPKG_TARGET_TRIPLET = "x64-windows"
 CMAKE_TOOLCHAIN_FILE = "C:/vcpkg/scripts/buildsystems/vcpkg.cmake"

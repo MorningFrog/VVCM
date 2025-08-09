@@ -2,11 +2,11 @@ set -eux
 
 # install prerequisites
 if command -v yum >/dev/null 2>&1; then
-    yum -y install git curl zip unzip tar
+    yum -y install git curl zip unzip tar gcc gcc-c++ ninja-build
 elif command -v microdnf >/dev/null 2>&1; then
-    microdnf -y install git curl zip unzip tar
+    microdnf -y install git curl zip unzip tar gcc gcc-c++ ninja-build
 elif command -v apk >/dev/null 2>&1; then
-    apk add --no-cache git curl zip unzip tar
+    apk add --no-cache git curl zip unzip tar build-base ninja
 fi
 
 # install vcpkg
