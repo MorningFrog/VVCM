@@ -36,6 +36,18 @@ build-verbosity = 1
 # test-command = "pytest {project}/tests"
 # test-requires = "pytest"
 
-# Needed for full C++17 support on macOS
+[tool.cibuildwheel.macos]
+
 [tool.cibuildwheel.macos.environment]
+# Needed for full C++17 support on macOS
 MACOSX_DEPLOYMENT_TARGET = "10.14"
+
+[tool.cibuildwheel.linux]
+before-all = "bash cibuildwheel_scripts/before-all.linux.bash"
+
+[tool.cibuildwheel.linux.environment]
+VCPKG_ROOT = "/opt/vcpkg"
+VCPKG_DEFAULT_TRIPLET = "x64-linux"
+CMAKE_TOOLCHAIN_FILE = "/opt/vcpkg/scripts/buildsystems/vcpkg.cmake"
+
+[tool.cibuildwheel.windows]
