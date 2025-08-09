@@ -81,7 +81,7 @@ jobs:
         # Optional: Skip test for windows arm64
         CIBW_TEST_SKIP: ${{ matrix.arch == 'ARM64' && '*win*arm64*' || '' }}
         # Set the manylinux standard for aarch64
-        CIBW_MANYLINUX_AARCH64: manylinux_2_28
+        CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_28
 
     - name: Verify clean directory
       run: git diff --exit-code
