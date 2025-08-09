@@ -32,19 +32,30 @@ jobs:
         path: dist/*.tar.gz
 
   build_wheels:
-    name: Wheels on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.runner }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+        include:
+          - name: linux_x86_64
+            runner: ubuntu-latest
+            env_arch_key: CIBW_ARCHS_LINUX
+            arch: x86_64
+          - name: linux_aarch64
+            runner: ubuntu-latest
+            env_arch_key: CIBW_ARCHS_LINUX
+            arch: aarch64
 
     steps:
     - uses: actions/checkout@v4
       with:
         submodules: true
 
-    - uses: pypa/cibuildwheel@v2.22
+    - name: Build wheels via cibuildwheel
+      uses: pypa/cibuildwheel@v2.22
+      env:
+        ${{ matrix.env_arch_key }}: ${{ matrix.arch }}
 
     - name: Verify clean directory
       run: git diff --exit-code
@@ -54,4 +65,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         path: wheelhouse/*.whl
-        name: dist-${{ matrix.os }}
+        name: dist-${{ matrix.name }}
