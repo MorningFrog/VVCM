@@ -50,11 +50,13 @@ CMAKE_TOOLCHAIN_FILE = "/opt/vcpkg/scripts/buildsystems/vcpkg.cmake"
 # Set for linux x64
 [[tool.cibuildwheel.overrides]]
 select = "*linux_x86_64*"
+inherit.environment = "append"
 environment = { VCPKG_TARGET_TRIPLET = "x64-linux" }
 
 # Set for linux arm64
 [[tool.cibuildwheel.overrides]]
 select = "*linux_aarch64*"
+inherit.environment = "append"
 environment = { VCPKG_TARGET_TRIPLET = "arm64-linux" }
 
 [tool.cibuildwheel.windows]
@@ -68,6 +70,7 @@ CMAKE_TOOLCHAIN_FILE = "C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
 # Set for windows x64
 [[tool.cibuildwheel.overrides]]
 select = "*windows_amd64*"
+inherit.environment = "append"
 environment = { VCPKG_TARGET_TRIPLET = "x64-windows" }
 
 # Set for windows arm64
@@ -88,9 +91,11 @@ CMAKE_TOOLCHAIN_FILE = "$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
 # Set for macos x64
 [[tool.cibuildwheel.overrides]]
 select = "*macos_x86_64*"
+inherit.environment = "append"
 environment = { MACOSX_DEPLOYMENT_TARGET = "10.14", VCPKG_TARGET_TRIPLET = "x64-osx" }
 
 # Set for macos arm64
 [[tool.cibuildwheel.overrides]]
 select = "*macos_arm64*"
+inherit.environment = "append"
 environment = { MACOSX_DEPLOYMENT_TARGET = "11.0", VCPKG_TARGET_TRIPLET = "arm64-osx" }
