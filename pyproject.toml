@@ -37,28 +37,40 @@ build-verbosity = 1
 # test-requires = "pytest"
 
 # skip pypy wheels
-skip = ["pp*", "cp38*", "cp39*", "cp310*", "cp311*", "cp312*"]
-
-[tool.cibuildwheel.macos]
-
-[tool.cibuildwheel.macos.environment]
-# Needed for full C++17 support on macOS
-MACOSX_DEPLOYMENT_TARGET = "10.14"
+skip = ["*musllinux*", "pp*", "cp38*", "cp39*", "cp310*", "cp311*", "cp312*"]
 
 [tool.cibuildwheel.linux]
 before-all = "bash cibuildwheel_scripts/before-all.linux.bash"
-archs = ["x86_64"]
+archs = ["auto64"]
 
 [tool.cibuildwheel.linux.environment]
 VCPKG_ROOT = "/opt/vcpkg"
-VCPKG_DEFAULT_TRIPLET = "x64-linux"
 CMAKE_TOOLCHAIN_FILE = "/opt/vcpkg/scripts/buildsystems/vcpkg.cmake"
 
 [tool.cibuildwheel.windows]
 before-all = "powershell -ExecutionPolicy Bypass -File cibuildwheel_scripts/before-all.windows.ps1"
-archs = ["AMD64"]
+archs = ["auto64"]
 
 [tool.cibuildwheel.windows.environment]
 VCPKG_ROOT = "C:/vcpkg"
-VCPKG_TARGET_TRIPLET = "x64-windows"
 CMAKE_TOOLCHAIN_FILE = "C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
+
+[tool.cibuildwheel.macos]
+before-all = "zsh cibuildwheel_scripts/before-all.macos.zsh"
+archs = ["auto"]
+
+[tool.cibuildwheel.macos.environment]
+VCPKG_ROOT = "$HOME/vcpkg"
+CMAKE_TOOLCHAIN_FILE = "$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
+
+## Needed for full C++17 support on macOS
+
+# Set MACOSX_DEPLOYMENT_TARGET for x86_64
+[[tool.cibuildwheel.overrides]]
+select = "macos and arch == 'x86_64'"
+environment = { MACOSX_DEPLOYMENT_TARGET = "10.14" }
+
+# Set MACOSX_DEPLOYMENT_TARGET for arm64
+[[tool.cibuildwheel.overrides]]
+select = "macos and arch == 'arm64'"
+environment = { MACOSX_DEPLOYMENT_TARGET = "11.0" }
