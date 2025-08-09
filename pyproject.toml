@@ -90,12 +90,12 @@ CMAKE_TOOLCHAIN_FILE = "$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
 
 # Set for macos x64
 [[tool.cibuildwheel.overrides]]
-select = "*macos_x86_64*"
+select = "*macos*x86_64*"
 inherit.environment = "append"
 environment = { MACOSX_DEPLOYMENT_TARGET = "10.14", VCPKG_TARGET_TRIPLET = "x64-osx" }
 
 # Set for macos arm64
 [[tool.cibuildwheel.overrides]]
-select = "*macos_arm64*"
+select = "*macos*arm64*"
 inherit.environment = "append"
 environment = { MACOSX_DEPLOYMENT_TARGET = "11.0", VCPKG_TARGET_TRIPLET = "arm64-osx" }
