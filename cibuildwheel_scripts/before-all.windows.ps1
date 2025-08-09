@@ -16,7 +16,7 @@ foreach ($var in @("CMAKE_TOOLCHAIN_FILE", "CMAKE_PREFIX_PATH", "CMAKE_MODULE_PA
     }
 }
 
-$env:VCPKG_ROOT\bootstrap-vcpkg.bat -disableMetrics
+& "$env:VCPKG_ROOT\bootstrap-vcpkg.bat" -disableMetrics
 
 # Restore backed up CMake environment variables
 foreach ($kv in $backupVars.GetEnumerator()) {
@@ -24,4 +24,4 @@ foreach ($kv in $backupVars.GetEnumerator()) {
 }
 
 # install eigen3
-$env:VCPKG_ROOT\vcpkg install "eigen3:$env:ARCH"
+& "$env:VCPKG_ROOT\vcpkg" install "eigen3:$env:VCPKG_TARGET_TRIPLET"
