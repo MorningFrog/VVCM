@@ -46,16 +46,40 @@ jobs:
             runner: ubuntu-latest
             env_arch_key: CIBW_ARCHS_LINUX
             arch: aarch64
+          - name: windows_amd64
+            runner: windows-latest
+            env_arch_key: CIBW_ARCHS_WINDOWS
+            arch: amd64
+          - name: windows_arm64
+            runner: windows-latest
+            env_arch_key: CIBW_ARCHS_WINDOWS
+            arch: arm64
+          - name: macos_x86_64
+            runner: macos-13
+            env_arch_key: CIBW_ARCHS_MACOS
+            arch: x86_64
+          - name: macos_arm64
+            runner: macos-14
+            env_arch_key: CIBW_ARCHS_MACOS
+            arch: arm64
 
     steps:
     - uses: actions/checkout@v4
       with:
         submodules: true
 
+    - name: Set up QEMU (Linux aarch64 only)
+      if: startsWith(matrix.name, 'linux') && matrix.arch == 'aarch64'
+      uses: docker/setup-qemu-action@v3
+      with:
+        platforms: arm64
+
     - name: Build wheels via cibuildwheel
       uses: pypa/cibuildwheel@v2.22
       env:
         ${{ matrix.env_arch_key }}: ${{ matrix.arch }}
+        # Optional: Skip test for windows arm64
+        CIBW_TEST_SKIP: ${{ matrix.arch == 'arm64' && '*win*arm64*' || '' }}
 
     - name: Verify clean directory
       run: git diff --exit-code
