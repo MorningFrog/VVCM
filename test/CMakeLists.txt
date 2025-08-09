@@ -1,12 +1,12 @@
 find_package(Eigen3 CONFIG REQUIRED)
-add_definitions( ${EIGEN3_DEFINITIONS} )
+add_definitions(${EIGEN3_DEFINITIONS})
 include_directories(${EIGEN3_INCLUDE_DIRS})
 
 # include(GoogleTest)
 
 # target_link_libraries(VVCM_FK_test GTest::gtest GTest::gtest_main ${EIGEN3_LIBS} VVCM_FK)
 
-# 添加测试用例
+# Add test examples
 add_executable(VVCM_FK_test VVCM_FK_test.cpp)
 target_link_libraries(VVCM_FK_test ${EIGEN3_LIBS} VVCM_FK)
 

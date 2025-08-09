@@ -20,9 +20,9 @@ namespace VVCM
 
     enum class VVCM_FK_Error
     {
-        NoError,            // 无错误
-        NoSolution,         // 无解
-        NoStableSolution,   // 无稳定解
+        NoError,
+        NoSolution,
+        NoStableSolution,
         InFeasibleFormation // Rn is not inside Vn
     };
 
@@ -35,13 +35,21 @@ namespace VVCM
         float zr;    // Height of holding point
         MatrixXf Vn; // Sheet shape
 
-        int M;              // Number of stable solutions
-        MatrixXf Rn;        // Current robot formation
-        Vector3fVector Po;  // Object positions in world frame in all stable solutions
-        Vector2fVector Vo;  // Object positions in sheet frame in all stable solutions
-        IntVectorVector It; // Taut cable set in all stable solutions
-        IntVector Tn;       // Number of taut cables in each solution
-        IntVector ITn;      // Number of non-taut cables in each solution
+        int M;                  // Number of stable solutions
+        MatrixXf Rn;            // Current robot formation
+        Vector3fVector Po;      // Object positions in world frame in all stable solutions
+        Vector2fVector Vo;      // Object positions in sheet frame in all stable solutions
+        IntVectorVector It;     // Taut cable set in all stable solutions
+        IntVector Tn;           // Number of taut cables in each solution
+        IntVector ITn;          // Number of non-taut cables in each solution
+        IntVector stable_idxes; // Indexes of stable solutions
+
+        int M_all;              // Number of all solutions (regardless of stability)
+        Vector3fVector Po_all;  // Object positions in world frame in all solutions (regardless of stability)
+        Vector2fVector Vo_all;  // Object positions in sheet frame in all solutions (regardless of stability)
+        IntVectorVector It_all; // Taut cable set in all solutions (regardless of stability)
+        IntVector Tn_all;       // Number of taut cables in each solution (regardless of stability)
+        IntVector ITn_all;      // Number of non-taut cables in each solution (regardless of stability)
 
         VVCM_FK(int N, float zr, const MatrixXf &Vn);
 

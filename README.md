@@ -1,9 +1,42 @@
-# Python绑定
+# Installation
 
-编译前，确保系统的 python3 为所需的 python3 版本。如果使用 Linux 和 Devcontainer，可以修改 `.devcontainer/devcontainer.json` 文件中的 `"PYTHON_VERSION": "3.10"` 行，将其修改为所需的 python 版本来编译。
+## From source
 
-编译后，python包位于：
-- 库文件：`build/pybind11/*.so` 或 `build/pybind11/*.pyd`
-- stub文件：`build/pybind11/stubs/*.pyi`
+### 1. Prerequisites
 
-将库文件和stub文件复制到python包内即可使用。
+- Windows:
+  - [MSVC](https://visualstudio.microsoft.com/)
+  - [Python](https://www.python.org/) (with debugging symbols and debugging binaries)
+- Linux: [GCC](https://gcc.gnu.org/) or [Clang](https://clang.llvm.org/)
+- [vcpkg](https://vcpkg.io/)
+  > Can be installed via `install_scripts/install_vcpkg.bash` on Ubuntu or `install_scripts/install_vcpkg.ps1` on Windows
+- [CMake](https://cmake.org/)
+  > Can be installed via `install_scripts/install_cmake.bash` on Ubuntu or `install_scripts/install_cmake.ps1` on Windows
+
+### 2. Install dependencies
+
+Ubuntu:
+
+```bash
+bash install_scripts/install_requirements.bash
+```
+
+Windows:
+
+```powershell
+& install_scripts/install_requirements.ps1
+```
+
+### 3. Install the package
+
+Ubuntu:
+
+```bash
+bash install_scripts/install.bash
+```
+
+Windows:
+
+```powershell
+& install_scripts/install.ps1
+```

@@ -1,4 +1,5 @@
 .vscode/
 build/
 log/
-release_python/
+.venv/
+__pycache__/

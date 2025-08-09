@@ -14,46 +14,53 @@ namespace VVCM
 {
 
     VVCM_FK::VVCM_FK(int N, float zr, const MatrixXf &Vn)
-        : N(N), zr(zr), Vn(Vn), M(0), Rn(), Po(), Vo(), It(), Tn(), ITn() {}
+        : N(N), zr(zr), Vn(Vn),
+          M(0), Rn(), Po(), Vo(), It(), Tn(), ITn(), stable_idxes(),
+          M_all(0), Po_all(), Vo_all(), It_all(), Tn_all(), ITn_all() {}
 
     VVCM_FK_Error VVCM_FK::update_stable_solutions(const MatrixXf &Rn)
     {
-        this->Rn = Rn;
-        auto [vvcm_error, M, Po, Vo, It, Tn, ITn, lambda, Omega_idx, Omega] = get_solutions_inside_polygon();
-
-        if (M == 0)
-        {
-            this->M = 0;
-            this->Po.clear();
-            this->Vo.clear();
-            this->It.clear();
-            this->Tn.clear();
-            this->ITn.clear();
-            return vvcm_error;
-        }
-
-        auto local_minimalism = get_local_minimalism(M, Tn, ITn, lambda, Omega_idx, Omega);
-        IntVector idx;
-        for (int i = 0; i < local_minimalism.size(); ++i)
-        {
-            if (local_minimalism(i) != 0)
-            {
-                idx.push_back(i);
-            }
-        }
-        this->M = idx.size();
+        // Clear previous results
+        this->M = 0;
         this->Po.clear();
         this->Vo.clear();
         this->It.clear();
         this->Tn.clear();
         this->ITn.clear();
-        for (auto i : idx)
+        this->stable_idxes.clear();
+
+        // Update robot formation and all solutions
+        this->Rn = Rn;
+        auto [vvcm_error, M_all, Po_all, Vo_all, It_all, Tn_all, ITn_all, lambda, Omega_idx, Omega] = get_solutions_inside_polygon();
+
+        this->M_all = M_all;
+        this->Po_all = Po_all;
+        this->Vo_all = Vo_all;
+        this->It_all = It_all;
+        this->Tn_all = Tn_all;
+        this->ITn_all = ITn_all;
+
+        if (M_all == 0)
         {
-            this->Po.push_back(Po[i]);
-            this->Vo.push_back(Vo[i]);
-            this->It.push_back(It[i]);
-            this->Tn.push_back(Tn[i]);
-            this->ITn.push_back(ITn[i]);
+            return vvcm_error;
+        }
+
+        auto local_minimalism = get_local_minimalism(M_all, Tn_all, ITn_all, lambda, Omega_idx, Omega);
+        for (int i = 0; i < local_minimalism.size(); ++i)
+        {
+            if (local_minimalism(i) != 0)
+            {
+                this->stable_idxes.push_back(i);
+            }
+        }
+        this->M = this->stable_idxes.size();
+        for (auto i : this->stable_idxes)
+        {
+            this->Po.push_back(Po_all[i]);
+            this->Vo.push_back(Vo_all[i]);
+            this->It.push_back(It_all[i]);
+            this->Tn.push_back(Tn_all[i]);
+            this->ITn.push_back(ITn_all[i]);
         }
 
         if (this->M == 0)
@@ -155,7 +162,7 @@ namespace VVCM
         MatrixXf distV(num_rows_Vn, num_rows_Vn);
         MatrixXf distR(num_rows_Rn, num_rows_Rn);
 
-        // 计算Vn的距离矩阵
+        // Calculate distance matrix of Vn
         for (int i = 0; i < num_rows_Vn; ++i)
         {
             for (int j = 0; j < num_rows_Vn; ++j)
@@ -164,7 +171,7 @@ namespace VVCM
             }
         }
 
-        // 计算Rn的距离矩阵
+        // Calculate distance matrix of Rn
         for (int i = 0; i < num_rows_Rn; ++i)
         {
             for (int j = 0; j < num_rows_Rn; ++j)
@@ -173,7 +180,7 @@ namespace VVCM
             }
         }
 
-        // 检查Rn的所有距离是否都小于等于Vn的对应距离
+        // Check if all distances in Rn are less than or equal to the corresponding distances in Vn
         return (distR.array() <= distV.array()).all();
     }
 
