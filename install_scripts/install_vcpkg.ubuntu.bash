@@ -23,9 +23,6 @@ fi
 cd "$INSTALL_DIR"
 ./bootstrap-vcpkg.sh -disableMetrics
 
-# Set default to install release version of libraries
-echo "set(VCPKG_BUILD_TYPE release)" | tee -a triplets/x64-linux.cmake
-
 # Add line if missing function
 add_line_if_missing () {
   local line="$1"

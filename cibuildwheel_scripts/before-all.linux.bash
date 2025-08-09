@@ -25,7 +25,8 @@ fi
 
 # Bootstrap the installation
 cd "$VCPKG_ROOT"
-./bootstrap-vcpkg.sh -disableMetrics
+env -u CMAKE_TOOLCHAIN_FILE -u CMAKE_PREFIX_PATH -u CMAKE_MODULE_PATH \
+  ./bootstrap-vcpkg.sh -disableMetrics
 
 echo "set(VCPKG_BUILD_TYPE release)" | tee -a triplets/${VCPKG_DEFAULT_TRIPLET:-x64-linux}.cmake
 
