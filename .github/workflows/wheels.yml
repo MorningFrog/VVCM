@@ -38,33 +38,30 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: linux_x86_64
-            runner: ubuntu-latest
-            env_arch_key: CIBW_ARCHS_LINUX
-            arch: x86_64
+          # - name: linux_x86_64
+          #   runner: ubuntu-latest
+          #   env_arch_key: CIBW_ARCHS_LINUX
+          #   arch: x86_64
           - name: linux_aarch64
             runner: ubuntu-latest
             env_arch_key: CIBW_ARCHS_LINUX
             arch: aarch64
-          - name: windows_amd64
-            runner: windows-latest
-            env_arch_key: CIBW_ARCHS_WINDOWS
-            arch: AMD64
+          # - name: windows_amd64
+          #   runner: windows-latest
+          #   env_arch_key: CIBW_ARCHS_WINDOWS
+          #   arch: AMD64
           - name: windows_arm64
             runner: windows-latest
             env_arch_key: CIBW_ARCHS_WINDOWS
             arch: ARM64
-          - name: macos_x86_64
-            runner: macos-13
-            env_arch_key: CIBW_ARCHS_MACOS
-            arch: x86_64
-          - name: macos_arm64
-            runner: macos-14
-            env_arch_key: CIBW_ARCHS_MACOS
-            arch: arm64
-    env:
-      # Set the manylinux standard for aarch64
-      CIBW_MANYLINUX_AARCH64: manylinux_2_28
+          # - name: macos_x86_64
+          #   runner: macos-13
+          #   env_arch_key: CIBW_ARCHS_MACOS
+          #   arch: x86_64
+          # - name: macos_arm64
+          #   runner: macos-14
+          #   env_arch_key: CIBW_ARCHS_MACOS
+          #   arch: arm64
 
     steps:
     - uses: actions/checkout@v4
@@ -83,6 +80,8 @@ jobs:
         ${{ matrix.env_arch_key }}: ${{ matrix.arch }}
         # Optional: Skip test for windows arm64
         CIBW_TEST_SKIP: ${{ matrix.arch == 'ARM64' && '*win*arm64*' || '' }}
+        # Set the manylinux standard for aarch64
+        CIBW_MANYLINUX_AARCH64: manylinux_2_28
 
     - name: Verify clean directory
       run: git diff --exit-code
