@@ -22,11 +22,5 @@ cd "$VCPKG_ROOT"
 env -u CMAKE_TOOLCHAIN_FILE -u CMAKE_PREFIX_PATH -u CMAKE_MODULE_PATH \
   ./bootstrap-vcpkg.sh -disableMetrics
 
-if [ "${ARCH}" = "arm64" ]; then
-  DEFAULT_TRIPLET="arm64-osx"
-else
-  DEFAULT_TRIPLET="x64-osx"
-fi
-
 # install eigen3
-"$VCPKG_ROOT/vcpkg" install "eigen3:${DEFAULT_TRIPLET}"
+"$VCPKG_ROOT/vcpkg" install "eigen3:${VCPKG_TARGET_TRIPLET}"

@@ -41,19 +41,39 @@ skip = ["*musllinux*", "pp*", "cp38*", "cp39*", "cp310*", "cp311*", "cp312*"]
 
 [tool.cibuildwheel.linux]
 before-all = "bash cibuildwheel_scripts/before-all.linux.bash"
-archs = ["auto64"]
+archs = ["x86_64", "aarch64"]
 
 [tool.cibuildwheel.linux.environment]
 VCPKG_ROOT = "/opt/vcpkg"
 CMAKE_TOOLCHAIN_FILE = "/opt/vcpkg/scripts/buildsystems/vcpkg.cmake"
 
+# Set for linux x64
+[[tool.cibuildwheel.overrides]]
+select = "linux and arch == 'x86_64'"
+environment = { VCPKG_TARGET_TRIPLET = "x64-linux" }
+
+# Set for linux arm64
+[[tool.cibuildwheel.overrides]]
+select = "linux and arch == 'aarch64'"
+environment = { VCPKG_TARGET_TRIPLET = "arm64-linux" }
+
 [tool.cibuildwheel.windows]
 before-all = "powershell -ExecutionPolicy Bypass -File cibuildwheel_scripts/before-all.windows.ps1"
-archs = ["auto64"]
+archs = ["AMD64", "ARM64"]
 
 [tool.cibuildwheel.windows.environment]
 VCPKG_ROOT = "C:/vcpkg"
 CMAKE_TOOLCHAIN_FILE = "C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
+
+# Set for windows x64
+[[tool.cibuildwheel.overrides]]
+select = "windows and arch == 'AMD64'"
+environment = { VCPKG_TARGET_TRIPLET = "x64-windows" }
+
+# Set for windows arm64
+[[tool.cibuildwheel.overrides]]
+select = "windows and arch == 'ARM64'"
+environment = { VCPKG_TARGET_TRIPLET = "arm64-windows" }
 
 [tool.cibuildwheel.macos]
 before-all = "zsh cibuildwheel_scripts/before-all.macos.zsh"
@@ -65,12 +85,12 @@ CMAKE_TOOLCHAIN_FILE = "$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
 
 ## Needed for full C++17 support on macOS
 
-# Set MACOSX_DEPLOYMENT_TARGET for x86_64
+# Set for macos x64
 [[tool.cibuildwheel.overrides]]
 select = "macos and arch == 'x86_64'"
-environment = { MACOSX_DEPLOYMENT_TARGET = "10.14" }
+environment = { MACOSX_DEPLOYMENT_TARGET = "10.14", VCPKG_TARGET_TRIPLET = "x64-osx" }
 
-# Set MACOSX_DEPLOYMENT_TARGET for arm64
+# Set for macos arm64
 [[tool.cibuildwheel.overrides]]
 select = "macos and arch == 'arm64'"
-environment = { MACOSX_DEPLOYMENT_TARGET = "11.0" }
+environment = { MACOSX_DEPLOYMENT_TARGET = "11.0", VCPKG_TARGET_TRIPLET = "arm64-osx" }
