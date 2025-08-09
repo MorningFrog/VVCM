@@ -1,0 +1,64 @@
+# Compile wheels
+# Reference: https://nanobind.readthedocs.io/en/latest/packaging.html#step-6-build-wheels-in-the-cloud
+name: Wheels
+
+# Only on manual trigger
+on:
+  workflow_dispatch:
+
+# Publish Release need write permissions
+permissions:
+  contents: write
+
+jobs:
+  build_sdist:
+    name: Build SDist
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Build SDist
+      run: pipx run build --sdist
+
+    - name: Check metadata
+      run: pipx run twine check dist/*
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: dist-sdist
+        path: dist/*.tar.gz
+
+  build_wheels:
+    name: Wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-13, macos-14, macos-15, windows-latest]
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Set cibuildwheel hooks
+      shell: bash
+      run: |
+        echo 'CIBW_BEFORE_BUILD_LINUX="bash install_scripts/install_vcpkg.ubuntu.bash && bash install_scripts/install_requirements.ubuntu.bash"' >> $GITHUB_ENV
+        echo 'CIBW_BEFORE_BUILD_MACOS="bash install_scripts/install_vcpkg.macos.bash && bash install_scripts/install_requirements.macos.bash"' >> $GITHUB_ENV
+        echo 'CIBW_BEFORE_BUILD_WINDOWS="powershell -ExecutionPolicy Bypass -File install_scripts/install_vcpkg.windows.ps1 && powershell -ExecutionPolicy Bypass -File install_scripts/install_requirements.windows.ps1"' >> $GITHUB_ENV
+
+    - uses: pypa/cibuildwheel@v2.22
+
+    - name: Verify clean directory
+      run: git diff --exit-code
+      shell: bash
+
+    - name: Upload wheels
+      uses: actions/upload-artifact@v4
+      with:
+        path: wheelhouse/*.whl
+        name: dist-${{ matrix.os }}

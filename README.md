@@ -7,24 +7,42 @@
 - Windows:
   - [MSVC](https://visualstudio.microsoft.com/)
   - [Python](https://www.python.org/) (with debugging symbols and debugging binaries)
-- Linux: [GCC](https://gcc.gnu.org/) or [Clang](https://clang.llvm.org/)
-- [vcpkg](https://vcpkg.io/)
-  > Can be installed via `install_scripts/install_vcpkg.bash` on Ubuntu or `install_scripts/install_vcpkg.ps1` on Windows
-- [CMake](https://cmake.org/)
-  > Can be installed via `install_scripts/install_cmake.bash` on Ubuntu or `install_scripts/install_cmake.ps1` on Windows
+  - [CMake](https://cmake.org/), can be installed via `install_scripts/install_cmake.windows.ps1`
+  - [vcpkg](https://vcpkg.io/), can be installed via `install_scripts/install_vcpkg.windows.ps1`
+
+- Ubuntu:
+  - [GCC](https://gcc.gnu.org/) or [Clang](https://clang.llvm.org/)
+  - [Python](https://www.python.org/)
+  - [CMake](https://cmake.org/), can be installed via `install_scripts/install_cmake.ubuntu.bash`
+  - [vcpkg](https://vcpkg.io/), can be installed via `install_scripts/install_vcpkg.ubuntu.bash`
+
+- macOS:
+  - [Xcode](https://developer.apple.com/xcode/) (with command line tools), can be installed via the App Store
+  - [Python](https://www.python.org/)
+  - [Homebrew](https://brew.sh/)
+  - [CMake](https://cmake.org/), can be installed via `install_scripts/install_cmake.macos.zsh`
+  - [vcpkg](https://vcpkg.io/), can be installed via `install_scripts/install_vcpkg.macos.zsh`
+
+- Other Linux distributions: Please modify the installation scripts of Ubuntu.
 
 ### 2. Install dependencies
 
 Ubuntu:
 
 ```bash
-bash install_scripts/install_requirements.bash
+bash install_scripts/install_requirements.ubuntu.bash
 ```
 
 Windows:
 
 ```powershell
-& install_scripts/install_requirements.ps1
+& install_scripts/install_requirements.windows.ps1
+```
+
+macOS:
+
+```zsh
+zsh install_scripts/install_requirements.macos.zsh
 ```
 
 ### 3. Install the package
@@ -32,11 +50,17 @@ Windows:
 Ubuntu:
 
 ```bash
-bash install_scripts/install.bash
+bash install_scripts/install.ubuntu.bash
 ```
 
 Windows:
 
 ```powershell
-& install_scripts/install.ps1
+& install_scripts/install.windows.ps1
+```
+
+macOS:
+
+```zsh
+zsh install_scripts/install.macos.zsh
 ```

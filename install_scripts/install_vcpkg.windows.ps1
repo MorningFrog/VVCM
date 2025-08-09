@@ -25,6 +25,9 @@ if ($envPath -notlike "*$vcpkgDir*") {
     Write-Host "Added vcpkg to PATH (for current user)"
 }
 
+# Add VCPKG_ROOT
+[Environment]::SetEnvironmentVariable("VCPKG_ROOT", "$vcpkgDir", "User")
+
 # Optional: Set CMAKE_TOOLCHAIN_FILE environment variable
 [Environment]::SetEnvironmentVariable("CMAKE_TOOLCHAIN_FILE", "$vcpkgDir\scripts\buildsystems\vcpkg.cmake", "User")
 
