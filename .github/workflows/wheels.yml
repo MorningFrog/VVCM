@@ -5,6 +5,11 @@ name: Wheels
 # Only on manual trigger
 on:
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run mode (no real execution)"
+        type: boolean
+        default: true
 
 # Publish Release need write permissions
 permissions:
@@ -32,26 +37,56 @@ jobs:
         path: dist/*.tar.gz
 
   build_wheels:
-    name: Wheels on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.runner }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-13, macos-14, macos-15, windows-latest]
+        include:
+          - name: linux_x86_64
+            runner: ubuntu-latest
+            env_arch_key: CIBW_ARCHS_LINUX
+            arch: x86_64
+          - name: linux_aarch64
+            runner: ubuntu-latest
+            env_arch_key: CIBW_ARCHS_LINUX
+            arch: aarch64
+          - name: windows_amd64
+            runner: windows-latest
+            env_arch_key: CIBW_ARCHS_WINDOWS
+            arch: AMD64
+          - name: windows_arm64
+            runner: windows-latest
+            env_arch_key: CIBW_ARCHS_WINDOWS
+            arch: ARM64
+          - name: macos_x86_64
+            runner: macos-13
+            env_arch_key: CIBW_ARCHS_MACOS
+            arch: x86_64
+          - name: macos_arm64
+            runner: macos-14
+            env_arch_key: CIBW_ARCHS_MACOS
+            arch: arm64
 
     steps:
     - uses: actions/checkout@v4
       with:
         submodules: true
 
-    - name: Set cibuildwheel hooks
-      shell: bash
-      run: |
-        echo 'CIBW_BEFORE_BUILD_LINUX="bash install_scripts/install_vcpkg.ubuntu.bash && bash install_scripts/install_requirements.ubuntu.bash"' >> $GITHUB_ENV
-        echo 'CIBW_BEFORE_BUILD_MACOS="bash install_scripts/install_vcpkg.macos.bash && bash install_scripts/install_requirements.macos.bash"' >> $GITHUB_ENV
-        echo 'CIBW_BEFORE_BUILD_WINDOWS="powershell -ExecutionPolicy Bypass -File install_scripts/install_vcpkg.windows.ps1 && powershell -ExecutionPolicy Bypass -File install_scripts/install_requirements.windows.ps1"' >> $GITHUB_ENV
+    - name: Set up QEMU (Linux aarch64 only)
+      if: startsWith(matrix.name, 'linux') && matrix.arch == 'aarch64'
+      uses: docker/setup-qemu-action@v3
+      with:
+        platforms: arm64
 
-    - uses: pypa/cibuildwheel@v2.22
+    - name: Build wheels via cibuildwheel
+      uses: pypa/cibuildwheel@v2.22
+      env:
+        ${{ matrix.env_arch_key }}: ${{ matrix.arch }}
+        # Optional: Skip test for windows arm64
+        CIBW_TEST_SKIP: ${{ matrix.arch == 'ARM64' && '*win*arm64*' || '' }}
+        # Set the manylinux standard for aarch64
+        CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_28
 
     - name: Verify clean directory
       run: git diff --exit-code
@@ -61,4 +96,82 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         path: wheelhouse/*.whl
-        name: dist-${{ matrix.os }}
+        name: dist-${{ matrix.name }}
+
+  get_version:
+    name: Read VERSION
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.ver.outputs.version }}
+      tag: ${{ steps.ver.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: ver
+        shell: bash
+        run: |
+          if [ ! -f VERSION ]; then
+            echo "VERSION file missing" >&2; exit 1
+          fi
+          v=$(tr -d ' \t\r\n' < VERSION)   # Remove whitespace/newline/CRLF
+          if [ -z "$v" ]; then
+            echo "Empty VERSION" >&2; exit 1
+          fi
+          # Allow VERSION to have or not have prefix v
+          if [[ "$v" == v* ]]; then
+            tag="$v"; version="${v#v}"
+          else
+            tag="v${v}"; version="$v"
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+  # release to Github
+  release:
+    name: Publish to GitHub Release
+    needs: [get_version, build_sdist, build_wheels]
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        path: dist
+        pattern: dist-*
+        merge-multiple: true
+
+    - name: Generate checksums
+      run: |
+        cd dist
+        sha256sum * > SHA256SUMS.txt
+
+    - uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          dist/*.whl
+          dist/*.tar.gz
+          dist/SHA256SUMS.txt
+        tag_name: ${{ needs.get_version.outputs.tag }}
+        target_commitish: ${{ github.sha }}
+        generate_release_notes: true
+        draft: ${{ inputs.dry_run == true }}
+        prerelease: false
+
+  # publish wheels to PyPI
+  publish_wheels:
+    name: Publish Wheels
+    if: inputs.dry_run != true
+    needs: [build_sdist, build_wheels]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/setup-python@v5
+
+    - uses: actions/download-artifact@v4
+      with:
+        path: dist
+        pattern: dist-*
+        merge-multiple: true
+
+    - uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        user: __token__
+        password: ${{ secrets.pypi_password }}

@@ -36,6 +36,67 @@ build-verbosity = 1
 # test-command = "pytest {project}/tests"
 # test-requires = "pytest"
 
-# Needed for full C++17 support on macOS
+# skip pypy wheels
+skip = ["*musllinux*", "pp*"]
+
+[tool.cibuildwheel.linux]
+before-all = "bash cibuildwheel_scripts/before-all.linux.bash"
+archs = ["x86_64", "aarch64"]
+
+[tool.cibuildwheel.linux.environment]
+VCPKG_ROOT = "/opt/vcpkg"
+CMAKE_TOOLCHAIN_FILE = "/opt/vcpkg/scripts/buildsystems/vcpkg.cmake"
+
+# Set for linux x64
+[[tool.cibuildwheel.overrides]]
+select = "*linux*x86_64*"
+inherit.environment = "append"
+environment = { VCPKG_TARGET_TRIPLET = "x64-linux" }
+
+# Set for linux arm64
+[[tool.cibuildwheel.overrides]]
+select = "*linux*aarch64*"
+inherit.environment = "append"
+environment = { VCPKG_TARGET_TRIPLET = "arm64-linux" }
+
+[tool.cibuildwheel.windows]
+before-all = "powershell -ExecutionPolicy Bypass -File cibuildwheel_scripts/before-all.windows.ps1"
+archs = ["AMD64", "ARM64"]
+
+[tool.cibuildwheel.windows.environment]
+VCPKG_ROOT = "C:/vcpkg"
+CMAKE_TOOLCHAIN_FILE = "C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
+
+# Set for windows x64
+[[tool.cibuildwheel.overrides]]
+select = "*win*amd64*"
+inherit.environment = "append"
+environment = { VCPKG_TARGET_TRIPLET = "x64-windows" }
+
+# Set for windows arm64
+[[tool.cibuildwheel.overrides]]
+select = "*win*arm64*"
+inherit.environment = "append"
+environment = { VCPKG_TARGET_TRIPLET = "arm64-windows", CMAKE_GENERATOR_PLATFORM = "ARM64", CMAKE_PREFIX_PATH = "C:/vcpkg/installed/arm64-windows" }
+
+[tool.cibuildwheel.macos]
+before-all = "zsh cibuildwheel_scripts/before-all.macos.zsh"
+archs = ["auto"]
+
 [tool.cibuildwheel.macos.environment]
-MACOSX_DEPLOYMENT_TARGET = "10.14"
+VCPKG_ROOT = "$HOME/vcpkg"
+CMAKE_TOOLCHAIN_FILE = "$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
+
+## Needed for full C++17 support on macOS
+
+# Set for macos x64
+[[tool.cibuildwheel.overrides]]
+select = "*macos*x86_64*"
+inherit.environment = "append"
+environment = { MACOSX_DEPLOYMENT_TARGET = "10.14", VCPKG_TARGET_TRIPLET = "x64-osx" }
+
+# Set for macos arm64
+[[tool.cibuildwheel.overrides]]
+select = "*macos*arm64*"
+inherit.environment = "append"
+environment = { MACOSX_DEPLOYMENT_TARGET = "11.0", VCPKG_TARGET_TRIPLET = "arm64-osx" }
