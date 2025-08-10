@@ -46,6 +46,7 @@ archs = ["x86_64", "aarch64"]
 [tool.cibuildwheel.linux.environment]
 VCPKG_ROOT = "/opt/vcpkg"
 CMAKE_TOOLCHAIN_FILE = "/opt/vcpkg/scripts/buildsystems/vcpkg.cmake"
+VCPKG_CMAKE_SYSTEM_NAME = "Linux"
 
 # Set for linux x64
 [[tool.cibuildwheel.overrides]]
@@ -66,6 +67,7 @@ archs = ["AMD64", "ARM64"]
 [tool.cibuildwheel.windows.environment]
 VCPKG_ROOT = "C:/vcpkg"
 CMAKE_TOOLCHAIN_FILE = "C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
+VCPKG_CMAKE_SYSTEM_NAME = "Windows"
 
 # Set for windows x64
 [[tool.cibuildwheel.overrides]]
@@ -86,6 +88,7 @@ archs = ["auto"]
 [tool.cibuildwheel.macos.environment]
 VCPKG_ROOT = "$HOME/vcpkg"
 CMAKE_TOOLCHAIN_FILE = "$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
+VCPKG_CMAKE_SYSTEM_NAME = "Darwin"
 
 ## Needed for full C++17 support on macOS
 
