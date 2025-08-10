@@ -57,7 +57,7 @@ environment = { VCPKG_TARGET_TRIPLET = "x64-linux" }
 [[tool.cibuildwheel.overrides]]
 select = "*linux*aarch64*"
 inherit.environment = "append"
-environment = { VCPKG_TARGET_TRIPLET = "arm64-linux-release" }
+environment = { VCPKG_TARGET_TRIPLET = "arm64-linux" }
 
 [tool.cibuildwheel.windows]
 before-all = "powershell -ExecutionPolicy Bypass -File cibuildwheel_scripts/before-all.windows.ps1"
