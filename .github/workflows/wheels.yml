@@ -50,10 +50,10 @@ jobs:
           #   runner: windows-latest
           #   env_arch_key: CIBW_ARCHS_WINDOWS
           #   arch: AMD64
-          - name: windows_arm64
-            runner: windows-latest
-            env_arch_key: CIBW_ARCHS_WINDOWS
-            arch: ARM64
+          # - name: windows_arm64
+          #   runner: windows-latest
+          #   env_arch_key: CIBW_ARCHS_WINDOWS
+          #   arch: ARM64
           # - name: macos_x86_64
           #   runner: macos-13
           #   env_arch_key: CIBW_ARCHS_MACOS
