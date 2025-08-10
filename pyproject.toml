@@ -37,7 +37,7 @@ build-verbosity = 1
 # test-requires = "pytest"
 
 # skip pypy wheels
-skip = ["*musllinux*", "pp*", "cp38*", "cp39*", "cp310*", "cp311*", "cp312*"]
+skip = ["*musllinux*", "pp*"]
 
 [tool.cibuildwheel.linux]
 before-all = "bash cibuildwheel_scripts/before-all.linux.bash"
