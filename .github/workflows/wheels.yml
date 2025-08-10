@@ -159,7 +159,7 @@ jobs:
   # publish wheels to PyPI
   publish_wheels:
     name: Publish Wheels
-    if: ${{ !inputs.dry_run && secrets.pypi_password != '' }}
+    if: !inputs.dry_run
     needs: [build_sdist, build_wheels]
     runs-on: ubuntu-latest
     steps:
