@@ -29,7 +29,5 @@ cd "$VCPKG_ROOT"
 env -u CMAKE_TOOLCHAIN_FILE -u CMAKE_PREFIX_PATH -u CMAKE_MODULE_PATH \
   ./bootstrap-vcpkg.sh -disableMetrics
 
-echo "set(VCPKG_BUILD_TYPE release)" | tee -a triplets/${VCPKG_TARGET_TRIPLET:-x64-linux}.cmake
-
 # install eigen3
 "$VCPKG_ROOT/vcpkg" install "eigen3:${VCPKG_TARGET_TRIPLET}"
