@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 set -eux
 
-echo "CMAKE_GENERATOR: $CMAKE_GENERATOR"
-echo "CMAKE_GENERATOR_PLATFORM: $CMAKE_GENERATOR_PLATFORM"
-echo "VSCMD_ARG_TGT_ARCH: $VSCMD_ARG_TGT_ARCH"
-echo "VSINSTALLDIR: $VSINSTALLDIR"
-echo "VisualStudioVersion: $VisualStudioVersion"
-echo "CMAKE_PREFIX_PATH: $CMAKE_PREFIX_PATH"
+[ -n "$CMAKE_GENERATOR" ] && echo "CMAKE_GENERATOR: $CMAKE_GENERATOR"
+[ -n "$CMAKE_GENERATOR_PLATFORM" ] && echo "CMAKE_GENERATOR_PLATFORM: $CMAKE_GENERATOR_PLATFORM"
+[ -n "$VSCMD_ARG_TGT_ARCH" ] && echo "VSCMD_ARG_TGT_ARCH: $VSCMD_ARG_TGT_ARCH"
+[ -n "$VSINSTALLDIR" ] && echo "VSINSTALLDIR: $VSINSTALLDIR"
+[ -n "$VisualStudioVersion" ] && echo "VisualStudioVersion: $VisualStudioVersion"
+[ -n "$CMAKE_PREFIX_PATH" ] && echo "CMAKE_PREFIX_PATH: $CMAKE_PREFIX_PATH"
 
 # install prerequisites
 if command -v yum >/dev/null 2>&1; then
