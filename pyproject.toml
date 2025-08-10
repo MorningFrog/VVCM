@@ -47,6 +47,7 @@ archs = ["x86_64", "aarch64"]
 VCPKG_ROOT = "/opt/vcpkg"
 CMAKE_TOOLCHAIN_FILE = "/opt/vcpkg/scripts/buildsystems/vcpkg.cmake"
 VCPKG_CMAKE_SYSTEM_NAME = "Linux"
+CMAKE_GENERATOR = "Ninja"
 
 # Set for linux x64
 [[tool.cibuildwheel.overrides]]
