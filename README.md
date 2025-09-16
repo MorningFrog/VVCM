@@ -1,6 +1,32 @@
 # Installation
 
-## From source
+## From PyPI
+
+You can install the package from PyPI using pip:
+
+```bash
+pip install VVCM
+```
+
+PyPI hosts the following pre-built wheels:
+
+- Linux: `x86_64`, `aarch64`
+- Windows: `AMD64`, `ARM64`
+- macOS: `x86_64`, `arm64`
+
+> Only CPython wheels are provided. If you use PyPy, please build from source.
+
+## From Release
+
+In the Release of the repository, you can find pre-built binaries for various platforms:
+
+- Linux: `x86_64`, `aarch64`
+- Windows: `AMD64`, `ARM64`
+- macOS: `x86_64`, `arm64`
+
+> Only CPython wheels are provided. If you use PyPy, please build from source.
+
+## Build From Source
 
 ### 1. Prerequisites
 
