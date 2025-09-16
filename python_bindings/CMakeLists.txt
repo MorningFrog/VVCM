@@ -45,11 +45,15 @@ nanobind_add_module(
     ../include/VVCM_FK.hpp ../include/VVCM_ManualSimulation.hpp ../include/VVCM_Simulation.hpp
 )
 
-install(TARGETS VVCM_ext LIBRARY DESTINATION VVCM)
 nanobind_add_stub(
     VVCM_ext_stub
-    INSTALL_TIME
+    DEPENDS VVCM_ext
+    PYTHON_PATH $<TARGET_FILE_DIR:VVCM_ext>
     MODULE VVCM_ext
-    OUTPUT VVCM/VVCM_ext.pyi
-    PYTHON_PATH "VVCM"
+    OUTPUT VVCM_ext.pyi
+    MARKER_FILE py.typed
+    VERBOSE
 )
+
+install(TARGETS VVCM_ext LIBRARY DESTINATION VVCM)
+install(FILES $<TARGET_FILE_DIR:VVCM_ext>/py.typed $<TARGET_FILE_DIR:VVCM_ext>/VVCM_ext.pyi DESTINATION VVCM)
