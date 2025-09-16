@@ -157,21 +157,21 @@ jobs:
         prerelease: false
 
   # publish wheels to PyPI
-  publish_wheels:
-    name: Publish Wheels
-    if: inputs.dry_run != true
-    needs: [build_sdist, build_wheels]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/setup-python@v5
+  # publish_wheels:
+  #   name: Publish Wheels
+  #   if: inputs.dry_run != true
+  #   needs: [build_sdist, build_wheels]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/setup-python@v5
 
-    - uses: actions/download-artifact@v4
-      with:
-        path: dist
-        pattern: dist-*
-        merge-multiple: true
+  #   - uses: actions/download-artifact@v4
+  #     with:
+  #       path: dist
+  #       pattern: dist-*
+  #       merge-multiple: true
 
-    - uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        user: __token__
-        password: ${{ secrets.pypi_password }}
+  #   - uses: pypa/gh-action-pypi-publish@release/v1
+  #     with:
+  #       user: __token__
+  #       password: ${{ secrets.pypi_password }}
