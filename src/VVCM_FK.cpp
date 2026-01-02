@@ -111,7 +111,7 @@ namespace VVCM
         }
 
         // K = 3:N or 3:5 almost have no effect on the result
-        for (int K = 3; K <= 5; ++K)
+        for (int K = 3; K <= 5 && K <= N; ++K)
         {
             IntVector comb(K);
             std::iota(comb.begin(), comb.end(), 1);
