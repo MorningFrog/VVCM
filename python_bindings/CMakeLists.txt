@@ -25,8 +25,6 @@ if(NOT SKBUILD)
 endif()
 
 find_package(Eigen3 CONFIG REQUIRED)
-add_definitions(${EIGEN3_DEFINITIONS})
-include_directories(${EIGEN3_INCLUDE_DIRS})
 
 # Try to import all Python components potentially needed by nanobind
 find_package(Python 3.8
@@ -44,6 +42,7 @@ nanobind_add_module(
     ../src/VVCM_Simulation.cpp ../src/VVCM_FK.cpp ../src/VVCM_ManualSimulation.cpp
     ../include/VVCM_FK.hpp ../include/VVCM_ManualSimulation.hpp ../include/VVCM_Simulation.hpp
 )
+target_link_libraries(VVCM_ext PRIVATE Eigen3::Eigen)
 
 nanobind_add_stub(
     VVCM_ext_stub
