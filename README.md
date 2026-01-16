@@ -5,6 +5,7 @@ C++ and Python project for multi-robot transporting system with a deformable she
 ## Citation
 
 If you use the forward kinematics algorithm, please cite the following paper (bibtex):
+
 ```bibtex
 @article{ma2026stable,
   title = {Stable Kinematics for Multi-Robot Collaborative Transporting System with a Deformable Sheet},
@@ -13,12 +14,14 @@ If you use the forward kinematics algorithm, please cite the following paper (bi
   journal = {IEEE Transactions on Robotics},
   volume = {<To be assigned>},
   pages = {<To be assigned>},
+  doi={10.1109/TRO.2026.3653870}
 }
 ```
 
-> The paper is waiting for publication.
+> The paper is waiting for publication, early access version can be found [here](https://ieeexplore.ieee.org/document/11353119).
 
 Or
+
 ```bibtex
 @article{hu2024forward,
   title = {Forward Kinematics of Object Transporting by a Multi-Robot System With a Deformable Sheet},
@@ -32,6 +35,7 @@ Or
 ```
 
 If you are interested in the VVCM itself, please cite the following paper (bibtex):
+
 ```bibtex
 @article{hu2022multirobot,
   title = {Multi-Robot Object Transport Motion Planning With a Deformable Sheet},
