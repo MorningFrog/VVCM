@@ -72,7 +72,6 @@ inherit.environment = "append"
 environment = { VCPKG_TARGET_TRIPLET = "arm64-windows", CMAKE_GENERATOR_PLATFORM = "ARM64" }
 
 [tool.cibuildwheel.macos]
-before-all = "zsh cibuildwheel_scripts/before-all.macos.zsh"
 archs = ["auto"]
 
 ## Needed for full C++17 support on macOS
