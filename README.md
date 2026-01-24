@@ -71,7 +71,7 @@ pip install VVCM
 PyPI hosts the following pre-built wheels:
 
 - Linux: `x86_64`, `aarch64`
-- Windows: `AMD64`, `ARM64`
+- Windows: `AMD64`
 - macOS: `arm64`
 
 > Only CPython wheels are provided. If you use PyPy, please build from source.
@@ -81,7 +81,7 @@ PyPI hosts the following pre-built wheels:
 In the Release of the repository, you can find pre-built binaries for various platforms:
 
 - Linux: `x86_64`, `aarch64`
-- Windows: `AMD64`, `ARM64`
+- Windows: `AMD64`
 - macOS: `arm64`
 
 > Only CPython wheels are provided. If you use PyPy, please build from source.

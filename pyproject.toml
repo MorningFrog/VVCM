@@ -57,19 +57,13 @@ inherit.environment = "append"
 environment = { VCPKG_TARGET_TRIPLET = "arm64-linux" }
 
 [tool.cibuildwheel.windows]
-archs = ["AMD64", "ARM64"]
+archs = ["AMD64"]
 
 # Set for windows x64
 [[tool.cibuildwheel.overrides]]
 select = "*win*amd64*"
 inherit.environment = "append"
 environment = { VCPKG_TARGET_TRIPLET = "x64-windows" }
-
-# Set for windows arm64
-[[tool.cibuildwheel.overrides]]
-select = "*win*arm64*"
-inherit.environment = "append"
-environment = { VCPKG_TARGET_TRIPLET = "arm64-windows", CMAKE_GENERATOR_PLATFORM = "ARM64" }
 
 [tool.cibuildwheel.macos]
 archs = ["auto"]
