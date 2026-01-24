@@ -78,7 +78,6 @@ jobs:
     - name: Build wheels via cibuildwheel
       uses: pypa/cibuildwheel@v2.22
       env:
-        CIBW_ENABLE: "1"
         ${{ matrix.env_arch_key }}: ${{ matrix.arch }}
         # Optional: Skip test for arm64
         CIBW_TEST_SKIP: ${{ matrix.arch == 'ARM64' && '*win*arm64*' || '' }}
