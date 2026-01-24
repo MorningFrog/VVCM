@@ -54,6 +54,8 @@ If you are interested in the VVCM itself, please cite the following paper (bibte
 
 The most convenient way to use the C++ library is to copy the code and include it in your project.
 
+> Eigen version 3.4 or later is required; otherwise, you may need to modify `CMakeLists.txt`.
+
 > We do not provide pre-built binaries for the C++ library, and have not yet provided a vcpkg or conan package.
 
 ### Python Package
