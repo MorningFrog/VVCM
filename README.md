@@ -72,7 +72,7 @@ PyPI hosts the following pre-built wheels:
 
 - Linux: `x86_64`, `aarch64`
 - Windows: `AMD64`, `ARM64`
-- macOS: `x86_64`, `arm64`
+- macOS: `arm64`
 
 > Only CPython wheels are provided. If you use PyPy, please build from source.
 
@@ -82,7 +82,7 @@ In the Release of the repository, you can find pre-built binaries for various pl
 
 - Linux: `x86_64`, `aarch64`
 - Windows: `AMD64`, `ARM64`
-- macOS: `x86_64`, `arm64`
+- macOS: `arm64`
 
 > Only CPython wheels are provided. If you use PyPy, please build from source.
 
