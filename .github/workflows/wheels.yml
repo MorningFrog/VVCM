@@ -56,7 +56,7 @@ jobs:
             env_arch_key: CIBW_ARCHS_WINDOWS
             arch: AMD64
           - name: windows_arm64
-            runner: windows-latest
+            runner: windows-11-arm
             env_arch_key: CIBW_ARCHS_WINDOWS
             arch: ARM64
           - name: macos_arm64
@@ -78,8 +78,9 @@ jobs:
     - name: Build wheels via cibuildwheel
       uses: pypa/cibuildwheel@v2.22
       env:
+        CIBW_ENABLE: "1"
         ${{ matrix.env_arch_key }}: ${{ matrix.arch }}
-        # Optional: Skip test for windows arm64
+        # Optional: Skip test for arm64
         CIBW_TEST_SKIP: ${{ matrix.arch == 'ARM64' && '*win*arm64*' || '' }}
         # Set the manylinux standard for aarch64
         CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_28
