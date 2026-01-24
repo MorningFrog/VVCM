@@ -1,5 +1,3 @@
-find_package(Eigen3 CONFIG REQUIRED)
-
 # include(GoogleTest)
 
 # target_link_libraries(VVCM_FK_test GTest::gtest GTest::gtest_main Eigen3::Eigen VVCM_FK)

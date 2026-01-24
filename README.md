@@ -93,62 +93,32 @@ In the Release of the repository, you can find pre-built binaries for various pl
 - Windows:
   - [MSVC](https://visualstudio.microsoft.com/)
   - [Python](https://www.python.org/) (with debugging symbols and debugging binaries)
-  - [CMake](https://cmake.org/), can be installed via `install_scripts/install_cmake.windows.ps1`
-  - [vcpkg](https://vcpkg.io/), can be installed via `install_scripts/install_vcpkg.windows.ps1`
+  - [CMake](https://cmake.org/)
 
 - Ubuntu:
   - [GCC](https://gcc.gnu.org/) or [Clang](https://clang.llvm.org/)
   - [Python](https://www.python.org/)
-  - [CMake](https://cmake.org/), can be installed via `install_scripts/install_cmake.ubuntu.bash`
-  - [vcpkg](https://vcpkg.io/), can be installed via `install_scripts/install_vcpkg.ubuntu.bash`
+  - [CMake](https://cmake.org/)
 
 - macOS:
   - [Xcode](https://developer.apple.com/xcode/) (with command line tools), can be installed via the App Store
   - [Python](https://www.python.org/)
   - [Homebrew](https://brew.sh/)
-  - [CMake](https://cmake.org/), can be installed via `install_scripts/install_cmake.macos.zsh`
-  - [vcpkg](https://vcpkg.io/), can be installed via `install_scripts/install_vcpkg.macos.zsh`
+  - [CMake](https://cmake.org/)
 
 - Other Linux distributions: Please modify the installation scripts of Ubuntu.
 
 ##### 2. Install dependencies
 
-Ubuntu:
-
-```bash
-bash install_scripts/install_requirements.ubuntu.bash
-```
-
-Windows:
-
-```powershell
-& install_scripts/install_requirements.windows.ps1
-```
-
-macOS:
-
-```zsh
-zsh install_scripts/install_requirements.macos.zsh
+```shell
+python -m pip install numpy nanobind scikit-build-core[pyproject]
+python -m pip install matplotlib scipy
 ```
 
 ##### 3. Install the package
 
-Ubuntu:
-
-```bash
-bash install_scripts/install.ubuntu.bash
-```
-
-Windows:
-
-```powershell
-& install_scripts/install.windows.ps1
-```
-
-macOS:
-
-```zsh
-zsh install_scripts/install.macos.zsh
+```shell
+python -m pip install --no-build-isolation -v .
 ```
 
 ## Usage

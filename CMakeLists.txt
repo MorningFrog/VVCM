@@ -10,6 +10,15 @@ project(VVCM VERSION ${PROJECT_VERSION} LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# Fetch Eigen3
+include(FetchContent)
+
+FetchContent_Declare(
+  eigen
+  URL https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz
+)
+FetchContent_MakeAvailable(eigen)
+
 # Include subdirectories
 include_directories(include)
 add_subdirectory(src)
