@@ -4,7 +4,7 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "VVCM"
-version = "0.0.1"
+version = "1.0.0"
 description = "Use VVCM and stable forward kinematics to predict object position for multi-robot transportation system with a deformable sheet."
 readme = "README.md"
 requires-python = ">=3.9"
