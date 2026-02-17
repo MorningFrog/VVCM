@@ -12,13 +12,14 @@ If you use the forward kinematics algorithm, please cite the following paper (bi
   author = {Ma, Wenyao and Hu, Jiawei and Li, Jiamao and Yi, Jingang and Xiong, Zhenhua},
   year = 2026,
   journal = {IEEE Transactions on Robotics},
-  volume = {<To be assigned>},
-  pages = {<To be assigned>},
+  volume={42},
+  number={},
+  pages={837-853},
   doi={10.1109/TRO.2026.3653870}
 }
 ```
 
-> The paper is waiting for publication, early access version can be found [here](https://ieeexplore.ieee.org/document/11353119).
+> > The paper is available [here](https://ieeexplore.ieee.org/document/11353119).
 
 Or
 
