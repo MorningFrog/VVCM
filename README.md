@@ -2,6 +2,9 @@
 
 C++ and Python project for multi-robot transporting system with a deformable sheet, use virtual variable cables model (**VVCM**) to model the system.
 
+> [!WARNING]
+> This project may no longer be maintained. We strongly recommend using the long-term maintained Rust version, [vvcm-rs](https://github.com/MorningFrog/vvcm-rs). It can be used conveniently from **Rust**, **C++**, and **Python**, even if you are not a Rust developer. It also provides faster performance and a safer design.
+
 ## Citation
 
 If you use the forward kinematics algorithm, please cite the following paper (bibtex):
